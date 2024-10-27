@@ -24,7 +24,7 @@ $stock_total = $_GET['stock_total'];
 $pdo->beginTransaction();
 
 $sentencia = $pdo->prepare("UPDATE tb_compras 
-SET id_producto=:id_producto,
+SET id_almacen=:id_almacen,
     nro_compra=:nro_compra,
     fecha_compra=:fecha_compra,
     id_proveedor=:id_proveedor,
@@ -35,7 +35,7 @@ SET id_producto=:id_producto,
     fyh_actualizacion=:fyh_actualizacion 
     WHERE id_compra=:id_compra");
 
-$sentencia->bindParam('id_producto',$id_producto);
+$sentencia->bindParam('id_almacen',$id_producto);
 $sentencia->bindParam('nro_compra',$nro_compra);
 $sentencia->bindParam('fecha_compra',$fecha_compra);
 $sentencia->bindParam('id_proveedor',$id_proveedor);
@@ -49,7 +49,7 @@ $sentencia->bindParam('id_compra',$id_compra);
 if($sentencia->execute()){
 
     //actualiza el stock desde la compra
-    $sentencia = $pdo->prepare("UPDATE tb_almacen SET stock=:stock WHERE id_producto = :id_producto ");
+    $sentencia = $pdo->prepare("UPDATE tb_almacen SET stock=:stock WHERE id_almacen = :id_producto ");
     $sentencia->bindParam('stock',$stock_total);
     $sentencia->bindParam('id_producto',$id_producto);
     $sentencia->execute();

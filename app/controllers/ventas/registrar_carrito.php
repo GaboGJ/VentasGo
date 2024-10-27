@@ -8,7 +8,7 @@ $id_producto = $_GET['id_producto'];
 $cantidad = $_GET['cantidad'];
 
 $sentencia = $pdo->prepare("INSERT INTO tb_carrito
-       ( nro_venta, id_producto, cantidad, fyh_creacion) 
+       ( nro_venta, id_almacen, cantidad, fyh_creacion) 
 VALUES (:nro_venta,:id_producto,:cantidad,:fyh_creacion)");
 
 $sentencia->bindParam('nro_venta',$nro_venta);

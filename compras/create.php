@@ -85,7 +85,7 @@ include ('../app/controllers/compras/listado_de_compras.php');
                                                                <?php
                                                                $contador = 0;
                                                                foreach ($productos_datos as $productos_dato){
-                                                                   $id_producto = $productos_dato['id_producto']; ?>
+                                                                   $id_producto = $productos_dato['id_almacen']; ?>
                                                                    <tr>
                                                                        <td><?php echo $contador = $contador + 1; ?></td>
                                                                        <td>
@@ -96,7 +96,7 @@ include ('../app/controllers/compras/listado_de_compras.php');
                                                                                $('#btn_selecionar<?php echo $id_producto;?>').click(function () {
 
 
-                                                                                   var id_producto = "<?php echo $productos_dato['id_producto'];?>";
+                                                                                   var id_producto = "<?php echo $productos_dato['id_almacen'];?>";
                                                                                    $('#id_producto').val(id_producto);
 
                                                                                    var codigo = "<?php echo $productos_dato['codigo'];?>";
@@ -455,7 +455,7 @@ include ('../app/controllers/compras/listado_de_compras.php');
                                        <div class="col-md-12">
                                            <div class="form-group">
                                                <label for="">Fecha de la compra</label>
-                                               <input type="date" class="form-control" id="fecha_compra">
+                                               <input type="date" class="form-control" id="fecha_compra" value="<?php echo date('Y-m-d'); ?>">
                                            </div>
                                        </div>
 

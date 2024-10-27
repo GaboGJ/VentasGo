@@ -84,8 +84,8 @@ CREATE TABLE `tb_almacen`
 	`stock` DECIMAL(10,2) NULL,
 	`stock_minimo` DECIMAL(10,2) NULL,
 	`stock_maximo` DECIMAL(10,2) NULL,
-	`precio_compra` VARCHAR(50) NULL,
-	`precio_venta` VARCHAR(50) NULL,
+	`precio_compra` DECIMAL(10,2) NULL,
+	`precio_venta` DECIMAL(10,2) NULL,
 	`fecha_ingreso` DATE NULL,
 	`imagen` TEXT NULL,
 	`id_usuario` INT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE `tb_carrito`
 	`id_carrito` INT NOT NULL AUTO_INCREMENT,
 	`nro_venta` INT NULL,
 	`id_almacen` INT NULL,
-	`cantidad` INT NULL,
+	`cantidad` DECIMAL(10,2) NULL,
 	`fyh_creacion` DATETIME(4) NULL,
 	`fyh_actualizacion` DATETIME(4) NULL,
 	`fyh_eliminacio` DATETIME NULL,
@@ -615,15 +615,18 @@ ALTER TABLE `tb_ventas`
 
 /* Insert Data */
 
-INSERT INTO `tb_roles` (`id_rol`, `rol`, `fyh_creacion`, `fyh_actualizacion`) VALUES
-(1, 'SUPER ADMINISTRADOR', '2023-01-23 23:15:19', '2023-01-23 23:15:19'),
-(2, 'ADMINISTRADOR', '2023-01-23 23:15:19', '2023-01-23 23:15:19'),
-(3, 'VENDEDOR', '2023-01-23 19:11:28', '2023-01-23 20:13:35');
+INSERT INTO `tb_roles` (`id_rol`, `rol`, `fyh_creacion`, `fyh_actualizacion`, `fyh_eliminacion`, `estado_rol`) VALUES
+(1, 'SUPER ADMINISTRADOR', '2023-01-23 23:15:19', '2023-01-23 23:15:19', NULL, NULL),
+(2, 'ADMINISTRADOR', '2023-01-23 23:15:19', '2023-01-23 23:15:19', NULL, NULL),
+(3, 'VENDEDOR', '2023-01-23 19:11:28', '2023-01-23 20:13:35', NULL, NULL),
+(4, 'CONTADOR', '2023-01-23 21:09:54', '0000-00-00 00:00:00', NULL, NULL),
+(5, 'ALMACEN', '2023-01-24 08:28:24', '0000-00-00 00:00:00', NULL, NULL);
+
 
 INSERT INTO `tb_usuarios` (`id_usuario`, `nombres`, `email`, `password_user`, `token`, `id_rol`, `fyh_creacion`, `fyh_actualizacion`, `fyh_eliminacion`, `estado_usuario`) VALUES
-(1, 'Gabriel Guayhua Janco', 'guayhuajancogabriel2000@gmail.com', '$2y$10$sE1vWNdvV2vFLJZMN9bptuQAXnbkHUAmk26gT7lp5uMEZBoBRE2j2', '', 1, '2023-01-24 15:16:01', '2024-10-03 10:53:01', NULL, NULL),
-(2, 'Christian Suárez Arias', 'admin@gmail.com', '$2y$10$jhcSJJ88tXsmiahXNNcQN.Tlcu9LrR0AxEi34lccF15RmYynCniNC', NULL, 2, '2024-10-17 16:59:25', NULL, NULL, NULL),
-(3, 'Vendedor Generico', 'vendedor@gmail.com', '$2y$10$5GILh694WtYLN0Xo1cpCFuUZBOLgWjfkCWaTEUBATvkrt19cPsjKy', NULL, 3, '2024-10-17 17:00:33', NULL, NULL, NULL);
+(1, 'Gabriel Guayhua', 'guayhuajancogabriel2000@gmail.com', '$2y$10$sE1vWNdvV2vFLJZMN9bptuQAXnbkHUAmk26gT7lp5uMEZBoBRE2j2', '', 1, '2023-01-24 15:16:01', '2024-10-03 10:53:01', NULL, NULL),
+(4, 'Christian Suarez Arias', 'admin@gmail.com', '$2y$10$usU9e015PWB24pHJHlSjiuvcDXkFWN9./YeeaOyvHfFJunqD36/LW', NULL, 2, '2024-10-17 16:59:25', '2024-10-25 10:08:07', NULL, NULL),
+(5, 'GENERICO', 'generico@gmail.com', '$2y$10$DYu9RJV6CdmnXNuFiBgNxOtumMNhYJxFVy8VAF6LvFfdb8lUQs9BC', NULL, 3, '2024-10-17 17:00:33', '2024-10-25 10:08:44', NULL, NULL);
 
 INSERT INTO `tb_modulos` (`id_modulo`, `nombre_modulo`, `descripcion_modulo`, `fyh_creacion`, `fyh_actualizacion`, `fyh_eliminacion`, `estado_modulo`) VALUES
 (1, 'Usuarios', NULL, '2024-10-03 11:25:34', NULL, NULL, b'1'),
@@ -635,6 +638,7 @@ INSERT INTO `tb_modulos` (`id_modulo`, `nombre_modulo`, `descripcion_modulo`, `f
 (7, 'Permisos', NULL, '2024-10-19 14:20:46', NULL, NULL, b'1'),
 (8, 'Categorias', NULL, '2024-10-19 14:20:46', NULL, NULL, b'1'),
 (9, 'Proveedores', NULL, '2024-10-19 14:21:55', NULL, NULL, b'1');
+
 
 INSERT INTO `tb_operaciones` (`id_operacion`, `nombre_operacion`, `id_modulo`, `fyh_creacion`, `fyh_actualizacion`, `fyh_eliminacion`, `estado_operacion`) VALUES
 (9, 'Ver', 2, '2024-10-03 12:56:34', NULL, NULL, NULL),
@@ -681,15 +685,124 @@ INSERT INTO `tb_permisos` (`id_permiso`, `id_rol`, `id_operacion`) VALUES
 (31, 1, 27),
 (32, 3, 18),
 (33, 3, 19),
-(34, 2, 14),
 (35, 2, 9),
 (36, 2, 10),
 (37, 2, 16),
 (38, 2, 18),
-(39, 2, 20),
-(40, 2, 22),
 (41, 2, 24),
-(42, 2, 26);
+(42, 2, 26),
+(43, 2, 12),
+(44, 2, 11),
+(45, 2, 17),
+(46, 2, 19),
+(47, 2, 25),
+(48, 2, 27);
+
+INSERT INTO `tb_clientes` (`id_cliente`, `nombre_cliente`, `nit_ci_cliente`, `celular_cliente`, `email_cliente`, `fyh_creacion`, `fyh_actualizacion`, `fyh_eliminacion`, `estado_cliente`) VALUES
+(1, 'S/N', 'S/N', 'S/N', '', '2024-10-24 22:36:47', NULL, NULL, NULL);
+
+
+
+INSERT INTO `tb_categorias` (`id_categoria`, `nombre_categoria`, `fyh_creacion`, `fyh_actualizacion`, `fyh_eliminacion`, `estado_categoria`) VALUES
+(1, 'Gaseosas', '2024-10-24 22:34:11', NULL, NULL, NULL),
+(2, 'Carnes', '2024-10-24 22:34:21', NULL, NULL, NULL),
+(3, 'ENERGIZANTES', '2024-10-25 11:02:15', NULL, NULL, NULL),
+(4, 'AGUA', '2024-10-25 11:05:59', NULL, NULL, NULL),
+(5, 'Brixy', '2024-10-25 11:09:28', NULL, NULL, NULL),
+(6, 'Licores', '2024-10-25 11:36:01', NULL, NULL, NULL),
+(7, 'Panaderia', '2024-10-25 11:54:20', NULL, NULL, NULL),
+(8, 'Salsas', '2024-10-25 11:59:37', NULL, NULL, NULL),
+(9, 'Chimichurri', '2024-10-25 12:01:59', NULL, NULL, NULL),
+(10, 'Sal', '2024-10-25 12:03:31', NULL, NULL, NULL),
+(11, 'Mantequillas', '2024-10-25 12:06:11', NULL, NULL, NULL),
+(12, 'Carbones', '2024-10-25 12:25:16', NULL, NULL, NULL),
+(13, 'Kris', '2024-10-25 12:27:26', NULL, NULL, NULL),
+(14, 'Huevos', '2024-10-25 12:32:56', NULL, NULL, NULL),
+(15, 'Aceites', '2024-10-25 12:36:52', NULL, NULL, NULL),
+(16, 'Salsa Soya', '2024-10-25 12:38:12', NULL, NULL, NULL),
+(17, 'Nachos', '2024-10-25 12:41:24', NULL, NULL, NULL),
+(18, 'Sazonadores ', '2024-10-25 12:49:05', NULL, NULL, NULL),
+(19, 'Azucar', '2024-10-25 12:58:31', NULL, NULL, NULL);
+
+INSERT INTO `tb_almacen` (`id_almacen`, `codigo`, `nombre`, `descripcion`, `stock`, `stock_minimo`, `stock_maximo`, `precio_compra`, `precio_venta`, `fecha_ingreso`, `imagen`, `id_usuario`, `id_categoria`, `fyh_creacion`, `fyh_actualizacion`, `fyh_eliminacion`, `estado_producto`) VALUES
+(4, 'P-00002', 'Fanta 2lt', '', 6, 6, 6, '9', '11', '2024-10-10', '2024-10-25-10-18-47__', 4, 1, '2024-10-25 10:18:47', NULL, NULL, NULL),
+(5, 'P-00002', 'coca cola', 'coca cola 2ltr', 36, 6, 60, '9', '11', '2024-10-25', '2024-10-25-10-22-50__', 4, 1, '2024-10-25 10:22:50', '2024-10-25 10:59:06', NULL, NULL),
+(6, 'P-00003', 'Sprite 2lt', '', 6, 6, 6, '9', '11', '2024-10-10', '2024-10-25-10-58-43__', 4, 1, '2024-10-25 10:58:43', NULL, NULL, NULL),
+(7, 'P-00004', 'Fanta Guarana', '', 6, 6, 6, '9', '11', '2024-10-10', '2024-10-25-10-59-43__', 4, 1, '2024-10-25 10:59:43', NULL, NULL, NULL),
+(8, 'P-00005', 'Coca Cola 500ml', '', 24, 24, 24, '4', '6', '2024-10-10', '2024-10-25-11-01-23__', 4, 1, '2024-10-25 11:01:23', NULL, NULL, NULL),
+(9, 'P-00006', 'Power Azul 1lt', '', 12, 12, 12, '9', '15', '2024-10-10', '2024-10-25-11-02-48__', 4, 3, '2024-10-25 11:02:48', '2024-10-25 11:04:57', NULL, NULL),
+(10, 'P-00007', 'Power Azul 500ml', '', 12, 12, 12, '6', '10', '2024-10-10', '2024-10-25-11-03-39__', 4, 3, '2024-10-25 11:03:39', NULL, NULL, NULL),
+(11, 'P-00008', 'Power Rojo 500ml', '', 12, 12, 12, '6', '10', '2024-10-10', '2024-10-25-11-04-12__', 4, 3, '2024-10-25 11:04:12', NULL, NULL, NULL),
+(12, 'P-00009', 'Agua 500ml ', '', 24, 24, 24, '2', '4', '2024-10-10', '2024-10-25-11-06-39__', 4, 4, '2024-10-25 11:06:39', NULL, NULL, NULL),
+(13, 'P-00010', 'S. Ranch 250ml', '', 3, 3, 3, '15', '18', '2024-10-10', '2024-10-25-11-12-12__', 4, 5, '2024-10-25 11:12:12', NULL, NULL, NULL),
+(14, 'P-00011', 'S. Crema de Aji 250ml', '', 3, 3, 3, '16', '19', '2024-10-10', '2024-10-25-11-13-36__', 4, 5, '2024-10-25 11:13:36', NULL, NULL, NULL),
+(15, 'P-00012', 'S. Mostaza y Miel 250ml', '', 3, 3, 3, '14', '17', '2024-10-10', '2024-10-25-11-14-27__', 4, 5, '2024-10-25 11:14:27', NULL, NULL, NULL),
+(16, 'P-00013', 'S. Barbacoa 250ml', '', 3, 3, 3, '13', '16', '2024-10-10', '2024-10-25-11-15-16__', 4, 5, '2024-10-25 11:15:16', NULL, NULL, NULL),
+(17, 'P-00014', 'S. Golf', '', 10, 10, 10, '8', '10', '2024-10-10', '2024-10-25-11-16-26__', 4, 5, '2024-10-25 11:16:26', NULL, NULL, NULL),
+(18, 'P-00015', 'Llajua 230gr', '', 3, 3, 3, '14', '20', '2024-10-10', '2024-10-25-11-19-47__', 4, 5, '2024-10-25 11:19:47', NULL, NULL, NULL),
+(19, 'P-00016', 'Llajua Verde 230gr', '', 3, 3, 3, '16', '20', '2024-10-10', '2024-10-25-11-20-28__', 4, 5, '2024-10-25 11:20:28', NULL, NULL, NULL),
+(20, 'P-00017', 'Llajua Churrasquera 230gr', '', 3, 3, 3, '16', '20', '2024-10-10', '2024-10-25-11-21-16__', 4, 5, '2024-10-25 11:21:16', NULL, NULL, NULL),
+(21, 'P-00018', 'Dip Queso', '', 3, 3, 3, '14', '17', '2024-10-10', '2024-10-25-11-22-05__', 4, 5, '2024-10-25 11:22:05', NULL, NULL, NULL),
+(22, 'P-00019', 'Dip Nachos', '', 3, 3, 3, '14', '17', '2024-10-10', '2024-10-25-11-22-34__', 4, 5, '2024-10-25 11:22:34', NULL, NULL, NULL),
+(23, 'P-00020', 'Dip Queso Jalapeno', '', 3, 3, 3, '14', '17', '2024-10-10', '2024-10-25-11-23-28__', 4, 5, '2024-10-25 11:23:28', NULL, NULL, NULL),
+(24, 'P-00021', 'Pepinillo Entero', '', 4, 4, 4, '18', '22', '2024-10-10', '2024-10-25-11-24-27__', 4, 5, '2024-10-25 11:24:27', NULL, NULL, NULL),
+(25, 'P-00022', 'Jalapenos', '', 3, 3, 3, '15', '21', '2024-10-10', '2024-10-25-11-25-27__', 4, 5, '2024-10-25 11:25:27', NULL, NULL, NULL),
+(26, 'P-00023', 'Chucrut', '', 3, 3, 3, '14', '20', '2024-10-10', '2024-10-25-11-26-11__', 4, 5, '2024-10-25 11:26:11', NULL, NULL, NULL),
+(27, 'P-00024', 'Paprika', '', 2, 2, 2, '18', '23', '2024-10-10', '2024-10-25-11-26-49__', 4, 5, '2024-10-25 11:26:49', NULL, NULL, NULL),
+(28, 'P-00025', 'Jugo de Limón 500ml', '', 6, 6, 6, '5', '8', '2024-10-10', '2024-10-25-11-27-25__', 4, 5, '2024-10-25 11:27:25', NULL, NULL, NULL),
+(29, 'P-00026', 'Ketchup Pomo', '', 6, 6, 6, '9', '13', '2024-10-10', '2024-10-25-11-32-44__', 4, 5, '2024-10-25 11:32:44', NULL, NULL, NULL),
+(30, 'P-00027', 'Bidon 20lt', '', 5, 5, 5, '7', '10', '2024-10-10', '2024-10-25-11-34-09__', 4, 4, '2024-10-25 11:34:09', NULL, NULL, NULL),
+(31, 'P-00028', 'Mayonesa Pomo', '', 6, 6, 6, '9', '14', '2024-10-10', '2024-10-25-11-34-44__', 4, 5, '2024-10-25 11:34:44', NULL, NULL, NULL),
+(32, 'P-00029', 'Mostaza Pomo', '', 6, 6, 6, '9', '12', '2024-10-10', '2024-10-25-11-35-18__', 4, 5, '2024-10-25 11:35:18', NULL, NULL, NULL),
+(33, 'P-00030', 'Vino Cabernet Franc 750ml', '', 3, 3, 3, '55', '80', '2024-10-10', '2024-10-25-11-37-07__', 4, 6, '2024-10-25 11:37:07', NULL, NULL, NULL),
+(34, 'P-00031', 'Vino Terruno Tinto 700ml', '', 3, 3, 3, '20', '28', '2024-10-10', '2024-10-25-11-38-03__', 4, 6, '2024-10-25 11:38:03', NULL, NULL, NULL),
+(35, 'P-00032', 'Vino Terruno Blanco 700ml', '', 3, 3, 3, '19', '26', '2024-10-10', '2024-10-25-11-38-57__', 4, 6, '2024-10-25 11:38:57', NULL, NULL, NULL),
+(36, 'P-00033', 'Vino Terruno Oporto 700ml', '', 3, 3, 3, '23', '30', '2024-10-10', '2024-10-25-11-39-43__', 4, 6, '2024-10-25 11:39:43', NULL, NULL, NULL),
+(37, 'P-00034', 'Rush', '', 12, 12, 12, '8', '13', '2024-10-10', '2024-10-25-11-40-33__', 4, 3, '2024-10-25 11:40:33', NULL, NULL, NULL),
+(38, 'P-00035', 'Aloe Vera King Uva', '', 5, 5, 5, '7', '10', '2024-10-10', '2024-10-25-11-43-43__', 4, 6, '2024-10-25 11:43:43', NULL, NULL, NULL),
+(39, 'P-00036', 'Aloe Vera King Original', '', 5, 5, 5, '7', '10', '2024-10-10', '2024-10-25-11-51-33__', 4, 3, '2024-10-25 11:51:33', NULL, NULL, NULL),
+(40, 'P-00037', 'Aloe Vera King Fresa', '', 5, 5, 5, '7', '10', '2024-10-10', '2024-10-25-11-53-19__', 4, 3, '2024-10-25 11:53:19', NULL, NULL, NULL),
+(41, 'P-00038', 'Pan con Ajo Grande', '', 5, 5, 5, '20', '25', '2024-10-10', '2024-10-25-11-54-57__', 4, 7, '2024-10-25 11:54:57', NULL, NULL, NULL),
+(42, 'P-00039', 'Pan con Ajo Pequeno', '', 5, 5, 5, '18', '23', '2024-10-10', '2024-10-25-11-55-39__', 4, 7, '2024-10-25 11:55:39', NULL, NULL, NULL),
+(43, 'P-00040', 'Pan Molde', '', 10, 10, 10, '9', '11', '2024-10-10', '2024-10-25-11-56-09__', 4, 7, '2024-10-25 11:56:09', NULL, NULL, NULL),
+(44, 'P-00041', 'Pan molde Integral', '', 10, 10, 10, '9', '11', '2024-10-10', '2024-10-25-11-57-36__', 4, 7, '2024-10-25 11:57:36', NULL, NULL, NULL),
+(45, 'P-00042', 'Pan Hamburguesa', '', 10, 10, 10, '9', '11', '2024-10-10', '2024-10-25-11-58-12__', 4, 7, '2024-10-25 11:58:12', NULL, NULL, NULL),
+(46, 'P-00043', 'Pan Miga', '', 10, 10, 10, '9', '11', '2024-10-10', '2024-10-25-11-58-45__', 4, 7, '2024-10-25 11:58:45', NULL, NULL, NULL),
+(47, 'P-00044', 'Pan Miga Integral', '', 10, 10, 10, '9', '11', '2024-10-10', '2024-10-25-11-59-17__', 4, 7, '2024-10-25 11:59:17', NULL, NULL, NULL),
+(48, 'P-00045', 'Salsa Itonama', '', 5, 5, 5, '20', '28', '2024-10-10', '2024-10-25-12-00-22__', 4, 8, '2024-10-25 12:00:22', NULL, NULL, NULL),
+(49, 'P-00046', 'Salsa Ay Jarajo', '', 10, 10, 10, '18', '22', '2024-10-10', '2024-10-25-12-01-05__', 4, 8, '2024-10-25 12:01:05', NULL, NULL, NULL),
+(50, 'P-00047', 'Salsa Benianita', '', 8, 8, 8, '19', '25', '2024-10-10', '2024-10-25-12-01-39__', 4, 8, '2024-10-25 12:01:39', NULL, NULL, NULL),
+(51, 'P-00048', 'Chimichurri Chingolo Gril', '', 10, 10, 10, '25', '35', '2024-10-10', '2024-10-25-12-02-37__', 4, 9, '2024-10-25 12:02:37', NULL, NULL, NULL),
+(52, 'P-00049', 'Sal El Salerito con Limon', '', 2, 2, 2, '13', '20', '2024-10-10', '2024-10-25-12-05-20__', 4, 10, '2024-10-25 12:05:20', NULL, NULL, NULL),
+(53, 'P-00050', 'Mantequilla con ajo 100gr', '', 5, 5, 5, '10', '15', '2024-10-10', '2024-10-25-12-07-07__', 4, 11, '2024-10-25 12:07:07', NULL, NULL, NULL),
+(54, 'P-00051', 'Mantequilla con ajo 200gr', '', 5, 5, 5, '14', '20', '2024-10-10', '2024-10-25-12-07-42__', 4, 11, '2024-10-25 12:07:42', NULL, NULL, NULL),
+(55, 'P-00052', 'Sal el Salerito Original', '', 2, 2, 2, '13', '18', '2024-10-10', '2024-10-25-12-08-26__', 4, 10, '2024-10-25 12:08:26', NULL, NULL, NULL),
+(56, 'P-00053', 'Sal el Salerito Rosada Ablandadora', '', 2, 2, 2, '13', '20', '2024-10-10', '2024-10-25-12-09-24__', 4, 10, '2024-10-25 12:09:24', NULL, NULL, NULL),
+(57, 'P-00054', 'Sal con Chimichurri', '', 5, 5, 5, '3', '5', '2024-10-10', '2024-10-25-12-10-41__', 4, 10, '2024-10-25 12:10:41', NULL, NULL, NULL),
+(58, 'P-00055', 'Sal Rosada con limón 350gr', '', 5, 5, 5, '3', '5', '2024-10-10', '2024-10-25-12-11-36__', 4, 10, '2024-10-25 12:11:36', NULL, NULL, NULL),
+(59, 'P-00056', 'Sal el Salerito 500gr bolsa', '', 5, 5, 5, '3', '5', '2024-10-10', '2024-10-25-12-12-17__', 4, 10, '2024-10-25 12:12:17', NULL, NULL, NULL),
+(60, 'P-00057', 'Salserito Rosada Ablandadora ', '', 2, 2, 2, '15', '20', '2024-10-10', '2024-10-25-12-13-31__', 4, 10, '2024-10-25 12:13:31', NULL, NULL, NULL),
+(61, 'P-00058', 'Sal Salserito con Limón ', '', 2, 2, 2, '15', '20', '2024-10-10', '2024-10-25-12-14-20__', 4, 10, '2024-10-25 12:14:20', NULL, NULL, NULL),
+(62, 'P-00059', 'Fernet', '', 2, 2, 2, '100', '110', '2024-10-10', '2024-10-25-12-18-39__', 4, 6, '2024-10-25 12:18:39', NULL, NULL, NULL),
+(63, 'P-00060', 'Havana Reserva Pq', '', 1, 1, 1, '100', '110', '2024-10-10', '2024-10-25-12-19-21__', 4, 6, '2024-10-25 12:19:21', NULL, NULL, NULL),
+(64, 'P-00061', 'Carbon Rio Yata', '', 5, 5, 5, '15', '20', '2024-10-10', '2024-10-25-12-25-55__', 4, 12, '2024-10-25 12:25:55', NULL, NULL, NULL),
+(65, 'P-00062', 'Carbon Curupau', '', 5, 5, 5, '8', '15', '2024-10-10', '2024-10-25-12-26-56__', 4, 12, '2024-10-25 12:26:56', NULL, NULL, NULL),
+(66, 'P-00063', 'Mayonesa Doypack', '', 24, 24, 24, '9', '12', '2024-10-10', '2024-10-25-12-29-50__', 4, 13, '2024-10-25 12:29:50', NULL, NULL, NULL),
+(67, 'P-00064', 'Ketchup Doypack', '', 24, 24, 24, '8', '11', '2024-10-10', '2024-10-25-12-30-42__', 4, 13, '2024-10-25 12:30:42', NULL, NULL, NULL),
+(68, 'P-00065', 'Mostaza Doypack', '', 24, 24, 24, '7', '10', '2024-10-10', '2024-10-25-12-31-51__', 4, 13, '2024-10-25 12:31:51', NULL, NULL, NULL),
+(69, 'P-00066', 'Maple Entero ', '', 2, 2, 2, '22', '30', '2024-10-10', '2024-10-25-12-33-44__', 4, 14, '2024-10-25 12:33:44', NULL, NULL, NULL),
+(70, 'P-00067', 'Maple Medio', '', 6, 6, 6, '11', '15', '2024-10-10', '2024-10-25-12-36-05__', 4, 14, '2024-10-25 12:36:05', NULL, NULL, NULL),
+(71, 'P-00068', 'Aceite Luisa ', '', 6, 6, 6, '12', '13', '2024-10-10', '2024-10-25-12-37-42__', 4, 15, '2024-10-25 12:37:42', NULL, NULL, NULL),
+(72, 'P-00069', 'Salsa Soya Sakura Peque', '', 6, 6, 6, '4', '5', '2024-10-10', '2024-10-25-12-39-57__', 4, 16, '2024-10-25 12:39:57', NULL, NULL, NULL),
+(73, 'P-00070', 'Salsa Soya Sakura Grande ', '', 6, 6, 6, '7', '10', '2024-10-10', '2024-10-25-12-40-50__', 4, 16, '2024-10-25 12:40:50', NULL, NULL, NULL),
+(74, 'P-00071', 'Nacho Guadalajara Limon', '', 5, 5, 5, '9', '12', '2024-10-10', '2024-10-25-12-42-13__', 4, 17, '2024-10-25 12:42:13', NULL, NULL, NULL),
+(75, 'P-00072', 'Nacho Guadalajara Picante Limon', '', 5, 5, 5, '9', '12', '2024-10-10', '2024-10-25-12-43-32__', 4, 17, '2024-10-25 12:43:32', NULL, NULL, NULL),
+(76, 'P-00073', 'Nacho Guadalajara Tocino', '', 5, 5, 5, '9', '12', '2024-10-10', '2024-10-25-12-44-33__', 4, 17, '2024-10-25 12:44:33', '2024-10-25 12:46:40', NULL, NULL),
+(77, 'P-00074', 'Nacho Guadalajara Clasico', '', 5, 5, 5, '9', '12', '2024-10-10', '2024-10-25-12-45-37__', 4, 17, '2024-10-25 12:45:37', '2024-10-25 12:46:18', NULL, NULL),
+(78, 'P-00075', 'Nacho Guadalajara Picante', '', 5, 5, 5, '9', '12', '2024-10-10', '2024-10-25-12-47-47__', 4, 17, '2024-10-25 12:47:47', NULL, NULL, NULL),
+(79, 'P-00076', 'Nacho Guadalajara Queso', '', 5, 5, 5, '9', '12', '2024-10-10', '2024-10-25-12-48-20__', 4, 17, '2024-10-25 12:48:20', NULL, NULL, NULL),
+(80, 'P-00077', 'Azúcar Guabira ', '', 23, 23, 23, '5', '7', '2024-10-10', '2024-10-25-01-00-38__', 4, 19, '2024-10-25 13:00:38', NULL, NULL, NULL);
+
 
 SET FOREIGN_KEY_CHECKS=1 
 ;

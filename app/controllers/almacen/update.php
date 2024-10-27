@@ -47,7 +47,7 @@ $sentencia = $pdo->prepare("UPDATE tb_almacen
         id_usuario=:id_usuario,
         id_categoria=:id_categoria,
         fyh_actualizacion=:fyh_actualizacion 
-    WHERE id_producto = :id_producto ");
+    WHERE id_almacen = :id_producto ");
 
 $sentencia->bindParam('nombre',$nombre);
 $sentencia->bindParam('descripcion',$descripcion);

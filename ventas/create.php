@@ -4,7 +4,7 @@ include ('../layout/sesion.php');
 
 include ('../layout/parte1.php');
 include ('../app/controllers/ventas/listado_de_ventas.php');
-include ('../app/controllers/ventas/ultima_venta.php');
+//include ('../app/controllers/ventas/ultima_venta.php');
 include ('../app/controllers/almacen/listado_de_productos.php');
 include ('../app/controllers/clientes/listado_de_clientes.php');
 
@@ -90,7 +90,7 @@ include ('../app/controllers/clientes/listado_de_clientes.php');
                                                     <?php
                                                     $contador = 0;
                                                     foreach ($productos_datos as $productos_dato){
-                                                        $id_producto = $productos_dato['id_producto']; ?>
+                                                        $id_producto = $productos_dato['id_almacen']; ?>
                                                         <tr>
                                                             <td><?php echo $contador = $contador + 1; ?></td>
                                                             <td>
@@ -152,8 +152,8 @@ include ('../app/controllers/clientes/listado_de_clientes.php');
                                                     </div>
                                                     <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label for="">Cantidad</label>
-                                                            <input type="text" id="cantidad" class="form-control">
+                                                            <label for="">Cantidad:</label>
+                                                            <input type="number" id="cantidad" class="form-control" step="0.01" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2">
@@ -215,7 +215,14 @@ include ('../app/controllers/clientes/listado_de_clientes.php');
                                     $preio_total = 0;
 
                                     $nro_venta = $contador_de_ventas + 1;
-                                    $sql_carrito = "SELECT *,pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto FROM tb_carrito AS carr INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto WHERE nro_venta = '$nro_venta' ORDER BY id_carrito ASC ";
+                                    $sql_carrito = "SELECT *,pro.nombre as nombre_producto, 
+                                    pro.descripcion as descripcion, 
+                                    pro.precio_venta as precio_venta, 
+                                    pro.stock as stock, 
+                                    pro.id_almacen as id_almacen 
+                                    FROM tb_carrito AS carr 
+                                    INNER JOIN tb_almacen as pro ON carr.id_almacen = pro.id_almacen 
+                                    WHERE nro_venta = '$nro_venta' ORDER BY id_carrito ASC ";
                                     $query_carrito = $pdo->prepare($sql_carrito);
                                     $query_carrito->execute();
                                     $carrito_datos = $query_carrito->fetchAll(PDO::FETCH_ASSOC);
@@ -228,7 +235,7 @@ include ('../app/controllers/clientes/listado_de_clientes.php');
                                         <tr>
                                             <td>
                                                 <center><?php echo $contador_de_carrito; ?></center>
-                                                <input type="text" value="<?php echo $carrito_dato['id_producto']; ?>" id="id_producto<?php echo $contador_de_carrito; ?>" hidden>
+                                                <input type="text" value="<?php echo $carrito_dato['id_almacen']; ?>" id="id_producto<?php echo $contador_de_carrito; ?>" hidden>
                                             </td>
                                             <td><?php echo $carrito_dato['nombre_producto']; ?></td>
                                             <td><?php echo $carrito_dato['descripcion']; ?></td>

@@ -9,8 +9,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formCrearUnidad" action="../app/controllers/unidades/crear_unidad.php" method="POST">
-                    <div class="form-group">
+                <form id="formCrearUnidad" action="../app/controllers/unidades/crear_unidad.php" method="POST" >
+                <input type="hidden" name="redirect_url" value="<?php echo $_SERVER['REQUEST_URI']; ?>">    
+                <div class="form-group">
                         <label for="nombre_unidad">Nombre de la unidad:</label>
                         <input type="text" class="form-control" name="nombre_unidad" required>
                     </div>

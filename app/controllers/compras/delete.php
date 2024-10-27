@@ -26,9 +26,9 @@ if($sentencia->execute()){
 
     //actualiza el stock desde la compra
     $stock = $stock_actual - $cantidad_compra;
-    $sentencia = $pdo->prepare("UPDATE tb_almacen SET stock=:stock WHERE id_producto = :id_producto ");
+    $sentencia = $pdo->prepare("UPDATE tb_almacen SET stock=:stock WHERE id_almacen = :id_almacen ");
     $sentencia->bindParam('stock',$stock);
-    $sentencia->bindParam('id_producto',$id_producto);
+    $sentencia->bindParam('id_almacen',$id_producto);
     $sentencia->execute();
 
     $pdo->commit();

@@ -63,7 +63,7 @@ include ('../app/controllers/clientes/cargar_cliente.php');
                                     $preio_total = 0;
 
 
-                                    $sql_carrito = "SELECT *,pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto FROM tb_carrito AS carr INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto WHERE nro_venta = '$nro_venta' ORDER BY id_carrito ASC ";
+                                    $sql_carrito = "SELECT *,pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_almacen as id_producto FROM tb_carrito AS carr INNER JOIN tb_almacen as pro ON carr.id_almacen = pro.id_almacen WHERE nro_venta = '$nro_venta' ORDER BY id_carrito ASC ";
                                     $query_carrito = $pdo->prepare($sql_carrito);
                                     $query_carrito->execute();
                                     $carrito_datos = $query_carrito->fetchAll(PDO::FETCH_ASSOC);

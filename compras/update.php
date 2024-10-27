@@ -85,7 +85,7 @@ include ('../app/controllers/compras/cargar_compra.php');
                                                                 <?php
                                                                 $contador = 0;
                                                                 foreach ($productos_datos as $productos_dato){
-                                                                    $id_producto = $productos_dato['id_producto']; ?>
+                                                                    $id_producto = $productos_dato['id_almacen']; ?>
                                                                     <tr>
                                                                         <td><?php echo $contador = $contador + 1; ?></td>
                                                                         <td>

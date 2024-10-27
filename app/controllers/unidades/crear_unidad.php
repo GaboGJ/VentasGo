@@ -18,20 +18,21 @@ if (!empty($nombre_unidad) && !empty($simbolo_unidad)) {
         $sentencia = $pdo->prepare("INSERT INTO tb_unidades (nombre_unidad, simbolo_unidad) 
             VALUES (:nombre_unidad, :simbolo_unidad)");
 
-        // Obtener la fecha y hora actual
-        //$fechaHora = date('Y-m-d H:i:s');
-
         // Asignar parámetros
         $sentencia->bindParam(':nombre_unidad', $nombre_unidad);
         $sentencia->bindParam(':simbolo_unidad', $simbolo_unidad);
-        //$sentencia->bindParam(':fyh_creacion', $fechaHora);
 
         // Ejecutar la sentencia
         $sentencia->execute();
 
+        // Obtener el ID de la unidad recién creada
+        $idUnidadGuardada = $pdo->lastInsertId();
+
         // Mensaje de éxito
         $_SESSION['mensaje'] = "Unidad creada correctamente.";
-        header('Location: ' . $redirect_url); // Redirigir a la URL especificada
+        
+        // Redirigir a la URL especificada con el ID de la unidad como parámetro
+        header('Location: ' . $redirect_url . '?selected_id=' . $idUnidadGuardada);
         exit();
     } catch (PDOException $e) {
         // Manejar errores de base de datos

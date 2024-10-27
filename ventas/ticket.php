@@ -72,7 +72,7 @@ $fecha = date("d/m/Y", strtotime($fyh_creacion));
                              carr.cantidad as cantidad, 
                              (carr.cantidad * pro.precio_venta) as precio_total 
                           FROM tb_carrito AS carr 
-                          INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
+                          INNER JOIN tb_almacen as pro ON carr.id_almacen = pro.id_almacen 
                           WHERE nro_venta = '$nro_venta_get' 
                           ORDER BY carr.id_carrito ASC";
         $query_productos = $pdo->prepare($sql_productos);

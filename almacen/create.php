@@ -83,34 +83,29 @@ include ('../app/controllers/unidades/listado_de_unidades.php'); // Asegúrate d
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="">Unidad de Medida:</label>
-                                                            <div style="display: flex">
+                                                    <?php
+                                                    // Obtener el ID de la unidad seleccionada desde la URL
+                                                    $selected_id = $_GET['selected_id'] ?? null;
+                                                    ?>
+<div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="">Unidad de Medida Base:</label>
+                                                        <div style="display: flex">
                                                             <select name="id_unidad_base" class="form-control" required>
-                                                                <option value="">Seleccione una unidad</option>
+                                                              
                                                                 <?php foreach ($unidades_datos as $unidad) { ?>
-                                                                    <option value="<?php echo $unidad['id_unidad']; ?>">
+                                                                    <option value="<?php echo $unidad['id_unidad']; ?>" <?php echo ($unidad['id_unidad'] == $selected_id) ? 'selected' : ''; ?>>
                                                                         <?php echo $unidad['nombre_unidad']; ?>
                                                                     </option>
                                                                 <?php } ?>
                                                             </select>
                                                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#crearUnidadModal">
-    <i class="fa fa-plus"></i>
-</a>
-                                                             </div>
+                                                                <i class="fa fa-plus"></i>
+                                                            </a>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="">Nombre del producto:</label>
-                                                            <input type="text" name="nombre" class="form-control" required>
-                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="">Usuario</label>
@@ -118,51 +113,64 @@ include ('../app/controllers/unidades/listado_de_unidades.php'); // Asegúrate d
                                                             <input type="text" name="id_usuario" value="<?php echo $id_usuario_sesion; ?>" hidden>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-8">
+                                                    
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label for="">Descripción del producto:</label>
-                                                            <textarea name="descripcion" id="" cols="30" rows="2" class="form-control"></textarea>
+                                                            <label for="">Nombre del producto:</label>
+                                                            <input type="text" name="nombre" class="form-control" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="">Fecha de ingreso:</label>
+                                                            <input type="date" name="fecha_ingreso" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
                                                         </div>
                                                     </div>
                                                 </div>
 
+                                               
+
                                                 <div class="row">
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="">Stock:</label>
-                                                            <input type="number" name="stock" class="form-control" required>
+                                                            <input type="number" name="stock" class="form-control" step="0.01" required>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="">Stock mínimo:</label>
-                                                            <input type="number" name="stock_minimo" class="form-control">
+                                                            <input type="number" name="stock_minimo" class="form-control" step="0.01">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="">Stock máximo:</label>
-                                                            <input type="number" name="stock_maximo" class="form-control">
+                                                            <input type="number" name="stock_maximo" class="form-control" step="0.01">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="">Precio compra:</label>
-                                                            <input type="number" name="precio_compra" class="form-control" required>
+                                                            <input type="number" name="precio_compra" class="form-control" step="0.01" required>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2">
-                                                        <div class="form-group">
-                                                            <label for="">Precio venta:</label>
-                                                            <input type="number" name="precio_venta" class="form-control" required>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="">Precio venta:</label>
+                                                                <input type="number" name="precio_venta" class="form-control" step="0.01" required>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <div class="form-group">
-                                                            <label for="">Fecha de ingreso:</label>
-                                                            <input type="date" name="fecha_ingreso" class="form-control" required>
-                                                        </div>
-                                                    </div>
+                                                   <div class="col-md-9">
+                                                       <div class="form-group">
+                                                           <label for="">Descripción del producto:</label>
+                                                           <textarea name="descripcion" id="" cols="30" rows="1" class="form-control"></textarea>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                                  
                                                 </div>
                                             </div>
                                             <div class="col-md-3">

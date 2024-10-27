@@ -21,7 +21,7 @@ include ('app/controllers/clientes/listado_de_clientes.php');
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1 class="m-0">Bienvenido al SISTEMA de VENTAS - <?php echo $rol_sesion; ?> </h1>
+                    <h1 class="m-0">Bienvenido al VENTAS GGJ - <?php echo $rol_sesion; ?> </h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -51,14 +51,25 @@ include ('app/controllers/clientes/listado_de_clientes.php');
                             <h3><?php echo $contador_de_usuarios;?></h3>
                             <p>Usuarios Registrados</p>
                         </div>
-                        <a href="<?php echo $URL;?>/usuarios/create.php">
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear usuarios
+                        if (tiene_permiso('Usuarios', 'Crear', $permisos)) {
+                        ?>
+                           <a href="<?php echo $URL;?>/usuarios/create.php">
+                        <?php } ?>
+                        
                             <div class="icon">
                                 <i class="fas fa-user-plus"></i>
                             </div>
                         </a>
+                        <?php
+                        if (tiene_permiso('Usuarios', 'Ver', $permisos)) {
+                            // Si el usuario tiene permiso, muestra esta parte
+                        ?>
                         <a href="<?php echo $URL;?>/usuarios" class="small-box-footer">
                             Más detalle <i class="fas fa-arrow-circle-right"></i>
                         </a>
+                        <?php }?>
                     </div>
                 </div>
 
@@ -75,14 +86,24 @@ include ('app/controllers/clientes/listado_de_clientes.php');
                             <h3><?php echo $contador_de_roles;?></h3>
                             <p>Roles Registrados</p>
                         </div>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear usuarios
+                        if (tiene_permiso('Roles', 'Crear', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/roles/create.php">
+                        <?php } ?>
                             <div class="icon">
                                 <i class="fas fa-address-card"></i>
                             </div>
                         </a>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Roles', 'Ver', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/roles" class="small-box-footer">
                             Más detalle <i class="fas fa-arrow-circle-right"></i>
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -99,14 +120,24 @@ include ('app/controllers/clientes/listado_de_clientes.php');
                             <h3><?php echo $contador_de_categorias;?></h3>
                             <p>Categorías Registrados</p>
                         </div>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Categorias', 'Crear', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/categorias">
+                        <?php } ?>
                             <div class="icon">
                                 <i class="fas fa-tags"></i>
                             </div>
                         </a>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Categorias', 'Ver', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/categorias" class="small-box-footer">
                             Más detalle <i class="fas fa-arrow-circle-right"></i>
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -123,14 +154,24 @@ include ('app/controllers/clientes/listado_de_clientes.php');
                             <h3><?php echo $contador_de_productos;?></h3>
                             <p>Productos Registrados</p>
                         </div>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Almacen', 'Crear', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/almacen/create.php">
+                        <?php } ?>
                             <div class="icon">
                                 <i class="fas fa-list"></i>
                             </div>
                         </a>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Almacen', 'Ver', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/almacen" class="small-box-footer">
                             Más detalle <i class="fas fa-arrow-circle-right"></i>
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -150,14 +191,24 @@ include ('app/controllers/clientes/listado_de_clientes.php');
                             <h3><?php echo $contador_de_proveedores;?></h3>
                             <p>Proveedores Registrados</p>
                         </div>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Proveedores', 'Crear', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/proveedores">
+                        <?php } ?>
                             <div class="icon">
                                 <i class="fas fa-car"></i>
                             </div>
                         </a>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Proveedores', 'Ver', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/proveedores" class="small-box-footer">
                             Más detalle <i class="fas fa-arrow-circle-right"></i>
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -176,14 +227,24 @@ include ('app/controllers/clientes/listado_de_clientes.php');
                             <h3><?php echo $contador_de_compras;?></h3>
                             <p>Compras Registradas</p>
                         </div>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Compras', 'Crear', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/compras">
+                        <?php } ?>
                             <div class="icon">
                                 <i class="fas fa-cart-plus"></i>
                             </div>
                         </a>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Compras', 'Ver', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/compras" class="small-box-footer">
                             Más detalle <i class="fas fa-arrow-circle-right"></i>
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -202,14 +263,24 @@ include ('app/controllers/clientes/listado_de_clientes.php');
                             <h3><?php echo $contador_de_ventas;?></h3>
                             <p>Ventas Registradas</p>
                         </div>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Ventas', 'Crear', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/ventas">
+                        <?php } ?>
                             <div class="icon">
                                 <i class="fas fa-shopping-basket"></i>
                             </div>
                         </a>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Ventas', 'Ver', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/ventas" class="small-box-footer">
                             Más detalle <i class="fas fa-arrow-circle-right"></i>
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -227,14 +298,24 @@ include ('app/controllers/clientes/listado_de_clientes.php');
                             <h3><?php echo $contador_de_clientes;?></h3>
                             <p>Clientes Registradas</p>
                         </div>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Clientes', 'Crear', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/clientes">
+                        <?php } ?>
                             <div class="icon">
                                 <i class="fas fa-user-friends"></i>
                             </div>
                         </a>
+                        <?php
+                        // Verifica si el usuario tiene permiso para crear 
+                        if (tiene_permiso('Clientes', 'Ver', $permisos)) {
+                        ?>
                         <a href="<?php echo $URL;?>/clientes" class="small-box-footer">
                             Más detalle <i class="fas fa-arrow-circle-right"></i>
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
 
