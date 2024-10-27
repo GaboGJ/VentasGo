@@ -8,7 +8,7 @@
 define('SERVIDOR','localhost');
 define('USUARIO','root');
 define('PASSWORD','');
-define('BD','ventasgo');
+define('BD','ventasggj');
 
 $servidor = "mysql:dbname=".BD.";host=".SERVIDOR;
 

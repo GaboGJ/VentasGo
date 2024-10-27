@@ -32,7 +32,44 @@
 <script src="<?php echo $URL;?>/public/templeates/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="<?php echo $URL;?>/public/templeates/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="<?php echo $URL;?>/public/templeates/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Cargar datos para el datalist
+        function loadUnits() {
+            $.ajax({
+                url: '../app/controllers/unidades/buscar_unidades.php', // Asegúrate de que esta URL es correcta
+                method: 'GET',
+                success: function(data) {
+                    const unidades = JSON.parse(data);
+                    $('#datalistOptions').empty(); // Limpiar el datalist
+                    unidades.forEach(function(unidad) {
+                        $('#datalistOptions').append(`<option value="${unidad.nombre} (${unidad.simbolo})" data-id="${unidad.id}"></option>`);
+                    });
+                }
+            });
+        }
 
+        loadUnits(); // Cargar las unidades al inicio
+
+        // Manejar la selección de una unidad
+        $('#unidad_medida').on('input', function() {
+            const value = $(this).val();
+            const options = $('#datalistOptions option');
+            let found = false;
+            options.each(function() {
+                if (this.value === value) {
+                    $('#id_unidad_base').val($(this).data('id')); // Guardar el ID de la unidad seleccionada
+                    found = true;
+                }
+            });
+            if (!found) {
+                $('#id_unidad_base').val(''); // Limpiar el ID si no se encuentra
+            }
+        });
+
+       
+    });
+</script>
 </body>
 </html>
 

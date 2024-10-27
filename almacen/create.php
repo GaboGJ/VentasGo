@@ -1,12 +1,10 @@
 <?php
 include ('../app/config.php');
 include ('../layout/sesion.php');
-
 include ('../layout/parte1.php');
-
 include ('../app/controllers/almacen/listado_de_productos.php');
 include ('../app/controllers/categorias/listado_de_categoria.php');
-
+include ('../app/controllers/unidades/listado_de_unidades.php'); // Asegúrate de incluir esto si aún no lo has hecho
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -23,27 +21,22 @@ include ('../app/controllers/categorias/listado_de_categoria.php');
     </div>
     <!-- /.content-header -->
 
-
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Llene los datos con cuidado</h3>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                             </div>
-
                         </div>
 
                         <div class="card-body" style="display: block;">
                             <div class="row">
                                 <div class="col-md-12">
-
                                     <form action="../app/controllers/almacen/create.php" method="post" enctype="multipart/form-data">
 
                                         <div class="row">
@@ -66,32 +59,49 @@ include ('../app/controllers/categorias/listado_de_categoria.php');
                                                             }
                                                             $contador_de_id_productos = 1;
                                                             foreach ($productos_datos as $productos_dato){
-                                                                $contador_de_id_productos = $contador_de_id_productos +1;
+                                                                $contador_de_id_productos += 1;
                                                             }
                                                             ?>
-                                                            <input type="text" class="form-control"
-                                                                   value="<?php echo "P-".ceros($contador_de_id_productos); ?>" disabled>
-                                                            <input type="text"  name="codigo" value="<?php echo "P-".ceros($contador_de_id_productos); ?>" hidden>
+                                                            <input type="text" class="form-control" value="<?php echo "P-".ceros($contador_de_id_productos); ?>" disabled>
+                                                            <input type="text" name="codigo" value="<?php echo "P-".ceros($contador_de_id_productos); ?>" hidden>
                                                         </div>
                                                     </div>
+
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="">Categoría:</label>
                                                             <div style="display: flex">
                                                                 <select name="id_categoria" id="" class="form-control" required>
-                                                                    <?php
-                                                                    foreach ($categorias_datos as $categorias_dato){ ?>
+                                                                    <?php foreach ($categorias_datos as $categorias_dato) { ?>
                                                                         <option value="<?php echo $categorias_dato['id_categoria']; ?>">
                                                                             <?php echo $categorias_dato['nombre_categoria']; ?>
                                                                         </option>
-                                                                        <?php
-                                                                    }
-                                                                    ?>
+                                                                    <?php } ?>
                                                                 </select>
-                                                                <a href="<?php echo $URL;?>/categorias" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+                                                                <a href="<?php echo $URL; ?>/categorias" class="btn btn-primary"><i class="fa fa-plus"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="">Unidad de Medida:</label>
+                                                            <div style="display: flex">
+                                                            <select name="id_unidad_base" class="form-control" required>
+                                                                <option value="">Seleccione una unidad</option>
+                                                                <?php foreach ($unidades_datos as $unidad) { ?>
+                                                                    <option value="<?php echo $unidad['id_unidad']; ?>">
+                                                                        <?php echo $unidad['nombre_unidad']; ?>
+                                                                    </option>
+                                                                <?php } ?>
+                                                            </select>
+                                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#crearUnidadModal">
+    <i class="fa fa-plus"></i>
+</a>
+                                                             </div>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="">Nombre del producto:</label>
@@ -115,7 +125,6 @@ include ('../app/controllers/categorias/listado_de_categoria.php');
                                                         </div>
                                                     </div>
                                                 </div>
-
 
                                                 <div class="row">
                                                     <div class="col-md-2">
@@ -155,8 +164,6 @@ include ('../app/controllers/categorias/listado_de_categoria.php');
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -166,18 +173,15 @@ include ('../app/controllers/categorias/listado_de_categoria.php');
                                                     <output id="list" style=""></output>
                                                     <script>
                                                         function archivo(evt) {
-                                                            var files = evt.target.files; // FileList object
-                                                            // Obtenemos la imagen del campo "file".
+                                                            var files = evt.target.files;
                                                             for (var i = 0, f; f = files[i]; i++) {
-                                                                //Solo admitimos imágenes.
                                                                 if (!f.type.match('image.*')) {
                                                                     continue;
                                                                 }
                                                                 var reader = new FileReader();
                                                                 reader.onload = (function (theFile) {
                                                                     return function (e) {
-                                                                        // Insertamos la imagen
-                                                                        document.getElementById("list").innerHTML = ['<img class="thumb thumbnail" src="',e.target.result, '" width="100%" title="', escape(theFile.name), '"/>'].join('');
+                                                                        document.getElementById("list").innerHTML = ['<img class="thumb thumbnail" src="', e.target.result, '" width="100%" title="', escape(theFile.name), '"/>'].join('');
                                                                     };
                                                                 })(f);
                                                                 reader.readAsDataURL(f);
@@ -189,10 +193,6 @@ include ('../app/controllers/categorias/listado_de_categoria.php');
                                             </div>
                                         </div>
 
-
-
-
-
                                         <hr>
                                         <div class="form-group">
                                             <a href="index.php" class="btn btn-secondary">Cancelar</a>
@@ -202,7 +202,6 @@ include ('../app/controllers/categorias/listado_de_categoria.php');
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -213,6 +212,6 @@ include ('../app/controllers/categorias/listado_de_categoria.php');
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
+<?php include ('../unidades/create.php'); ?>
 <?php include ('../layout/mensajes.php'); ?>
 <?php include ('../layout/parte2.php'); ?>
