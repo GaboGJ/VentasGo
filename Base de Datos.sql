@@ -3,7 +3,7 @@
 /*  Created On : 02-oct.-2024 09:53:49 				*/
 /*  DBMS       : MySql 						*/
 /* ---------------------------------------------------- */
-
+USE `ventasgo-35303733326a`;
 SET FOREIGN_KEY_CHECKS=0 
 ;
 /* Cambiar el motor de almacenamiento predeterminado a InnoDB */
@@ -280,37 +280,34 @@ ALTER TABLE `tb_usuarios`
  ADD INDEX `IXFK_tb_usuarios_tb_roles` (`id_rol` ASC)
 ;
 
--- Aquí agregamos el índice único para nro_venta en tb_carrito
-ALTER TABLE `tb_carrito` 
- ADD UNIQUE INDEX `IX_nro_venta` (`nro_venta` ASC)
-;
 
+-- Agregamos un índice para id_cliente en tb_ventas
 ALTER TABLE `tb_ventas` 
  ADD INDEX `IXFK_tb_ventas_tb_clientes` (`id_cliente` ASC)
 ;
 
-/* Create Foreign Key Constraints */
+-- Creación de las claves foráneas
 
+-- Relación entre tb_almacen y tb_categorias
 ALTER TABLE `tb_almacen` 
  ADD CONSTRAINT `FK_tb_almacen_tb_categorias`
-	FOREIGN KEY (`id_categoria`) REFERENCES `tb_categorias` (`id_categoria`) ON DELETE Restrict ON UPDATE Restrict
+	FOREIGN KEY (`id_categoria`) REFERENCES `tb_categorias` (`id_categoria`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
+-- Relación entre tb_almacen y tb_usuarios
 ALTER TABLE `tb_almacen` 
  ADD CONSTRAINT `FK_tb_almacen_tb_usuarios`
-	FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuarios` (`id_usuario`) ON DELETE Restrict ON UPDATE Restrict
+	FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuarios` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
+-- Relación entre tb_carrito y tb_almacen
 ALTER TABLE `tb_carrito` 
  ADD CONSTRAINT `FK_tb_carrito_tb_almacen`
-	FOREIGN KEY (`id_producto`) REFERENCES `tb_almacen` (`id_producto`) ON DELETE Restrict ON UPDATE Restrict
+	FOREIGN KEY (`id_producto`) REFERENCES `tb_almacen` (`id_producto`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
 -- Aquí agregamos la clave foránea para relacionar tb_ventas con tb_carrito
-ALTER TABLE `tb_ventas` 
- ADD CONSTRAINT `FK_tb_ventas_tb_carrito`
-	FOREIGN KEY (`nro_venta`) REFERENCES `tb_carrito` (`nro_venta`) ON DELETE CASCADE ON UPDATE CASCADE
-;
+
 
 ALTER TABLE `tb_compras` 
  ADD CONSTRAINT `FK_tb_compras_tb_almacen`
@@ -361,8 +358,76 @@ INSERT INTO `tb_roles` (`id_rol`, `rol`, `fyh_creacion`, `fyh_actualizacion`) VA
 (4, 'CONTADOR', '2023-01-23 21:09:54', '0000-00-00 00:00:00'),
 (5, 'ALMACEN', '2023-01-24 08:28:24', '0000-00-00 00:00:00');
 
-INSERT INTO `tb_usuarios` (`id_usuario`, `nombres`, `email`, `password_user`, `token`, `id_rol`, `fyh_creacion`, `fyh_actualizacion`) 
-VALUES (1, 'Gabriel Guayhua', 'gabo@gmail.com', '$2y$10$eJMkyxZHWsyW3j0jYFO5oO.r.l29dup1KNnIRzRTIdN81gvFhm63q', '', 1, '2023-01-24 15:16:01', '2023-03-28 18:16:22');
+INSERT INTO `tb_usuarios` (`id_usuario`, `nombres`, `email`, `password_user`, `token`, `id_rol`, `fyh_creacion`, `fyh_actualizacion`, `fyh_eliminacion`, `estado_usuario`) VALUES
+(1, 'Gabriel Guayhua', 'guayhuajancogabriel2000@gmail.com', '$2y$10$sE1vWNdvV2vFLJZMN9bptuQAXnbkHUAmk26gT7lp5uMEZBoBRE2j2', '', 1, '2023-01-24 15:16:01', '2024-10-03 10:53:01', NULL, NULL),
+(4, 'Gabriel Guyahua Janco', 'gabo@gmail.com', '$2y$10$jhcSJJ88tXsmiahXNNcQN.Tlcu9LrR0AxEi34lccF15RmYynCniNC', NULL, 2, '2024-10-17 16:59:25', NULL, NULL, NULL),
+(5, 'Christian Suárez Arias', 'christian@gmail.com', '$2y$10$5GILh694WtYLN0Xo1cpCFuUZBOLgWjfkCWaTEUBATvkrt19cPsjKy', NULL, 3, '2024-10-17 17:00:33', NULL, NULL, NULL);
+
+INSERT INTO `tb_modulos` (`id_modulo`, `nombre_modulo`, `descripcion_modulo`, `fyh_creacion`, `fyh_actualizacion`, `fyh_eliminacion`, `estado_modulo`) VALUES
+(1, 'Usuarios', NULL, '2024-10-03 11:25:34', NULL, NULL, b'1'),
+(2, 'Compras', NULL, '2024-10-03 11:25:34', NULL, NULL, b'1'),
+(3, 'Ventas', NULL, '2024-10-03 11:28:26', NULL, NULL, b'1'),
+(4, 'Almacen', NULL, '2024-10-03 11:28:26', NULL, NULL, b'1'),
+(5, 'Clientes', NULL, '2024-10-19 14:18:48', NULL, NULL, b'1'),
+(6, 'Roles', NULL, '2024-10-19 14:18:48', NULL, NULL, b'1'),
+(7, 'Permisos', NULL, '2024-10-19 14:20:46', NULL, NULL, b'1'),
+(8, 'Categorias', NULL, '2024-10-19 14:20:46', NULL, NULL, b'1'),
+(9, 'Proveedores', NULL, '2024-10-19 14:21:55', NULL, NULL, b'1');
+
+INSERT INTO `tb_operaciones` (`id_operacion`, `nombre_operacion`, `id_modulo`, `fyh_creacion`, `fyh_actualizacion`, `fyh_eliminacion`, `estado_operacion`) VALUES
+(9, 'Ver', 2, '2024-10-03 12:56:34', NULL, NULL, NULL),
+(10, 'Ver', 3, '2024-10-03 12:57:12', NULL, NULL, NULL),
+(11, 'Crear', 3, '2024-10-03 12:57:12', NULL, NULL, NULL),
+(12, 'Crear', 2, '2024-10-03 13:55:10', NULL, NULL, NULL),
+(13, 'Editar', 3, '2024-10-04 10:58:07', NULL, NULL, NULL),
+(14, 'Ver', 1, '2024-10-19 14:16:00', NULL, NULL, NULL),
+(15, 'Crear', 1, '2024-10-19 14:16:00', NULL, NULL, NULL),
+(16, 'Ver', 4, '2024-10-19 14:24:10', NULL, NULL, NULL),
+(17, 'Crear', 4, '2024-10-19 14:24:10', NULL, NULL, NULL),
+(18, 'Ver', 5, '2024-10-19 14:24:32', NULL, NULL, NULL),
+(19, 'Crear', 5, '2024-10-19 14:24:32', NULL, NULL, NULL),
+(20, 'Ver', 6, '2024-10-19 14:24:39', NULL, NULL, NULL),
+(21, 'Crear', 6, '2024-10-19 14:24:39', NULL, NULL, NULL),
+(22, 'Ver', 7, '2024-10-19 14:24:46', NULL, NULL, NULL),
+(23, 'Crear', 7, '2024-10-19 14:24:46', NULL, NULL, NULL),
+(24, 'Ver', 8, '2024-10-19 14:24:52', NULL, NULL, NULL),
+(25, 'Crear', 8, '2024-10-19 14:24:52', NULL, NULL, NULL),
+(26, 'Ver', 9, '2024-10-19 14:25:10', NULL, NULL, NULL),
+(27, 'Crear', 9, '2024-10-19 14:25:10', NULL, NULL, NULL);
+
+INSERT INTO `tb_permisos` (`id_permiso`, `id_rol`, `id_operacion`) VALUES
+(7, 1, 9),
+(8, 1, 10),
+(9, 1, 11),
+(10, 1, 12),
+(11, 1, 13),
+(12, 3, 10),
+(13, 3, 11),
+(18, 1, 14),
+(19, 1, 15),
+(20, 1, 16),
+(21, 1, 17),
+(22, 1, 18),
+(23, 1, 19),
+(24, 1, 20),
+(25, 1, 21),
+(26, 1, 22),
+(27, 1, 23),
+(28, 1, 24),
+(29, 1, 25),
+(30, 1, 26),
+(31, 1, 27),
+(32, 3, 18),
+(33, 3, 19),
+(34, 2, 14),
+(35, 2, 9),
+(36, 2, 10),
+(37, 2, 16),
+(38, 2, 18),
+(39, 2, 20),
+(40, 2, 22),
+(41, 2, 24),
+(42, 2, 26);
 
 SET FOREIGN_KEY_CHECKS=1 
 ;

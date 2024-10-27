@@ -20,8 +20,9 @@ if(isset($_SESSION['sesion_email'])){
         $nombres_sesion = $usuario['nombres'];
         $rol_sesion = $usuario['rol'];
     }
-}else{
-    echo "no existe sesion";
+} else {
+    // Elimina el echo, ya que no puede haber salida antes de header()
     header('Location: '.$URL.'/login');
+    exit(); // Asegura que el script se detenga después de la redirección
 }
-
+?>

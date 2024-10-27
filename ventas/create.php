@@ -4,6 +4,7 @@ include ('../layout/sesion.php');
 
 include ('../layout/parte1.php');
 include ('../app/controllers/ventas/listado_de_ventas.php');
+include ('../app/controllers/ventas/ultima_venta.php');
 include ('../app/controllers/almacen/listado_de_productos.php');
 include ('../app/controllers/clientes/listado_de_clientes.php');
 
@@ -28,7 +29,7 @@ include ('../app/controllers/clientes/listado_de_clientes.php');
     <div class="content">
         <div class="container-fluid">
 
-            <div class="row">
+        <div class="row">
                 <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
